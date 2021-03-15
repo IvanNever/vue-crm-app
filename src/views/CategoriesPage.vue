@@ -3,10 +3,17 @@
     <div class="page-title">
       <h3>Категории</h3>
     </div>
-    <section>
+    <Loader v-if="loading" />
+    <section v-else>
       <div class="row">
         <CategoryCreate @created="addCategory" />
-        <CategoryUpdate />
+        <CategoryUpdate
+          v-if="categories.length"
+          :categories="categories"
+          @updated="updateCategoryList"
+          :key="categories.length + updateCount"
+        />
+        <p v-else>Список категорий пуст</p>
       </div>
     </section>
   </div>
@@ -18,15 +25,29 @@ import CategoryUpdate from "@/components/CategoryUpdate";
 export default {
   name: "CategoriesPage",
   data: () => ({
-    categories: []
+    categories: [],
+    loading: true,
+    updateCount: 0
   }),
   components: {
     CategoryCreate,
     CategoryUpdate
   },
+  async mounted() {
+    this.categories = await this.$store.dispatch("fetchCategories");
+    this.loading = false;
+  },
   methods: {
     addCategory(category) {
       this.categories.push(category);
+    },
+    updateCategoryList(category) {
+      const catIndx = this.categories.findIndex(
+        item => item.id === category.id
+      );
+      this.categories[catIndx].name = category.name;
+      this.categories[catIndx].limit = category.limit;
+      this.updateCount++;
     }
   }
 };
