@@ -13,7 +13,7 @@
           @updated="updateCategoryList"
           :key="categories.length + updateCount"
         />
-        <p v-else>Список категорий пуст</p>
+        <p v-else class="center">Список категорий пуст</p>
       </div>
     </section>
   </div>

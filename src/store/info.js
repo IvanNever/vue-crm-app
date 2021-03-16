@@ -23,8 +23,23 @@ export default {
             .once("value")
         ).val();
         commit("setInfo", info);
-      } catch (e) {
-        throw new Error(e);
+      } catch (err) {
+        commit("setError", err);
+        throw new Error(err);
+      }
+    },
+    async updateInfo({ commit, dispatch, getters }, toUpdate) {
+      try {
+        const uid = await dispatch("getUserId");
+        const updateData = { ...getters.info, ...toUpdate };
+        await firebase
+          .database()
+          .ref(`/users/${uid}/info`)
+          .update(updateData);
+        commit("setInfo", updateData);
+      } catch (err) {
+        commit("setError", err);
+        throw new Error(err);
       }
     }
   },
