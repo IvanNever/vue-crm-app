@@ -28,6 +28,8 @@
 <script>
 import NavbarMain from "@/components/app/NavbarMain";
 import SidebarMain from "@/components/app/SidebarMain";
+import messages from "@/utils/messages";
+
 export default {
   name: "MainLayout",
   components: {
@@ -44,6 +46,18 @@ export default {
     }
 
     this.loading = false;
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error;
+    }
+  },
+  watch: {
+    error(firebaseError) {
+      this.$error(
+        messages[firebaseError.code] || "Произошла неизвестная ошибка🙄"
+      );
+    }
   }
 };
 </script>
