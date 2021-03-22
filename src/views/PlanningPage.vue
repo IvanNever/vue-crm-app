@@ -34,6 +34,11 @@ import localizeFilter from "@/filters/localize.filter";
 
 export default {
   name: "PlanningPage",
+  metaInfo() {
+    return {
+      title: this.$title("Menu_Planning")
+    };
+  },
   data: () => ({
     categories: [],
     records: [],

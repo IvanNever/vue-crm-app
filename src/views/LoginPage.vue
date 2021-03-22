@@ -76,6 +76,11 @@ import messages from "@/utils/messages";
 
 export default {
   name: "LoginPage",
+  metaInfo() {
+    return {
+      title: this.$title("Enter")
+    };
+  },
   data: () => ({
     email: "",
     password: ""

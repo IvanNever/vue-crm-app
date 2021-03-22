@@ -27,6 +27,11 @@ import CategoryUpdate from "@/components/CategoryUpdate";
 
 export default {
   name: "CategoriesPage",
+  metaInfo() {
+    return {
+      title: this.$title("Menu_Categories")
+    };
+  },
   data: () => ({
     categories: [],
     loading: true,
