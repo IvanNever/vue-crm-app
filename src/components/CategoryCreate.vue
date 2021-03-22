@@ -2,7 +2,7 @@
   <div class="col s12 m6">
     <div>
       <div class="page-subtitle">
-        <h4>Создать</h4>
+        <h4>{{ "Create" | localizeFilter }}</h4>
       </div>
 
       <form @submit.prevent="submitHandler">
@@ -15,12 +15,12 @@
               invalid: $v.name.$dirty && !$v.name.required
             }"
           />
-          <label for="name">Название</label>
+          <label for="name">{{ "Title" | localizeFilter }}</label>
           <span
             class="helper-text invalid"
             v-if="$v.name.$dirty && !$v.name.required"
           >
-            Введите название категории
+            {{ "EnterCategoryName" | localizeFilter }}
           </span>
         </div>
 
@@ -35,22 +35,22 @@
                 ($v.limit.$dirty && !$v.limit.minValue)
             }"
           />
-          <label for="limit">Лимит</label>
+          <label for="limit">{{ "Limit" | localizeFilter }}</label>
           <span
             class="helper-text invalid"
             v-if="$v.limit.$dirty && !$v.limit.required"
-            >Укажите лимит расходов по категории</span
+            >{{ "EnterCategoryLimit" | localizeFilter }}</span
           >
           <span
             class="helper-text invalid"
             v-if="$v.limit.$dirty && !$v.limit.minValue"
-            >Лимит расходов должен быть не менее
+            >{{ "CategoryLimitMore" | localizeFilter }}
             {{ $v.limit.$params.minValue.min }} грн.</span
           >
         </div>
 
         <button class="btn waves-effect waves-light" type="submit">
-          Создать
+          {{ "Create" | localizeFilter }}
           <i class="material-icons right">send</i>
         </button>
       </form>
@@ -60,6 +60,8 @@
 
 <script>
 import { required, minValue } from "vuelidate/lib/validators";
+import localizeFilter from "@/filters/localize.filter";
+
 export default {
   name: "CategoryCreate",
   data() {
@@ -92,7 +94,7 @@ export default {
         setTimeout(() => {
           this.$v.$reset();
         }, 0);
-        this.$message("Категория успешно создана");
+        this.$message(localizeFilter("CreateCategorySuccess"));
         this.$emit("created", category);
       } catch (err) {
         throw new Error(err);

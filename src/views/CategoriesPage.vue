@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Категории</h3>
+      <h3>{{ "Menu_Categories" | localizeFilter }}</h3>
     </div>
     <Loader v-if="loading" />
     <section v-else>
@@ -13,7 +13,9 @@
           @updated="updateCategoryList"
           :key="categories.length + updateCount"
         />
-        <p v-else class="center">Список категорий пуст</p>
+        <p v-else class="center">
+          {{ "EmptyCategoriesMessage" | localizeFilter }}
+        </p>
       </div>
     </section>
   </div>
@@ -22,6 +24,7 @@
 <script>
 import CategoryCreate from "@/components/CategoryCreate";
 import CategoryUpdate from "@/components/CategoryUpdate";
+
 export default {
   name: "CategoriesPage",
   data: () => ({

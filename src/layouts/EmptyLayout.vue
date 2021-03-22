@@ -6,6 +6,7 @@
 
 <script>
 import messages from "@/utils/messages";
+import localizeFilter from "@/filters/localize.filter";
 
 export default {
   name: "EmptyLayout",
@@ -17,7 +18,7 @@ export default {
   watch: {
     error(firebaseError) {
       this.$error(
-        messages[firebaseError.code] || "Произошла неизвестная ошибка🙄"
+        messages[firebaseError.code] || localizeFilter("UnexpectedError")
       );
     }
   }

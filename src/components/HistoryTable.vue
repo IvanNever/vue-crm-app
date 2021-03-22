@@ -3,11 +3,11 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Сумма</th>
-        <th>Дата</th>
-        <th>Категория</th>
-        <th>Тип</th>
-        <th>Открыть</th>
+        <th>{{ "Amount" | localizeFilter }}</th>
+        <th>{{ "Date" | localizeFilter }}</th>
+        <th>{{ "Category" | localizeFilter }}</th>
+        <th>{{ "Type" | localizeFilter }}</th>
+        <th>{{ "Open" | localizeFilter }}</th>
       </tr>
     </thead>
 
@@ -26,7 +26,7 @@
           <button
             class="btn-small btn"
             @click="$router.push(`/detail-record/${record.id}`)"
-            v-tooltip="`Перейти к записи ${record.description}`"
+            v-tooltip="`${goTo} ${record.description}`"
           >
             <i class="material-icons">open_in_new</i>
           </button>
@@ -37,8 +37,12 @@
 </template>
 
 <script>
+import localizeFilter from "@/filters/localize.filter";
 export default {
   name: "HistoryTable",
+  data: () => ({
+    goTo: localizeFilter("GoTo")
+  }),
   props: {
     records: {
       required: true,

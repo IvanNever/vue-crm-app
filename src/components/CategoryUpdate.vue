@@ -2,7 +2,7 @@
   <div class="col s12 m6">
     <div>
       <div class="page-subtitle">
-        <h4>Редактировать</h4>
+        <h4>{{ "Edit" | localizeFilter }}</h4>
       </div>
 
       <form @submit.prevent="submitHandler">
@@ -15,7 +15,7 @@
               >{{ category.name }}</option
             >
           </select>
-          <label>Выберите категорию</label>
+          <label>{{ "SelectCategory" | localizeFilter }}</label>
         </div>
 
         <div class="input-field">
@@ -27,12 +27,12 @@
               invalid: $v.name.$dirty && !$v.name.required
             }"
           />
-          <label for="name">Название</label>
+          <label for="name">{{ "Title" | localizeFilter }}</label>
           <span
             class="helper-text invalid"
             v-if="$v.name.$dirty && !$v.name.required"
           >
-            Введите название категории
+            {{ "EnterCategoryName" | localizeFilter }}
           </span>
         </div>
 
@@ -47,22 +47,22 @@
                 ($v.limit.$dirty && !$v.limit.minValue)
             }"
           />
-          <label for="limit">Лимит</label>
+          <label for="limit">{{ "Limit" | localizeFilter }}</label>
           <span
             class="helper-text invalid"
             v-if="$v.limit.$dirty && !$v.limit.required"
-            >Укажите лимит расходов по категории</span
+            >{{ "EnterCategoryLimit" | localizeFilter }}</span
           >
           <span
             class="helper-text invalid"
             v-if="$v.limit.$dirty && !$v.limit.minValue"
-            >Лимит расходов должен быть не менее
+            >{{ "CategoryLimitMore" | localizeFilter }}
             {{ $v.limit.$params.minValue.min }} грн.</span
           >
         </div>
 
         <button class="btn waves-effect waves-light" type="submit">
-          Обновить
+          {{ "Update" | localizeFilter }}
           <i class="material-icons right">send</i>
         </button>
       </form>
@@ -72,6 +72,8 @@
 
 <script>
 import { required, minValue } from "vuelidate/lib/validators";
+import localizeFilter from "@/filters/localize.filter";
+
 export default {
   name: "CategoryUpdate",
   data: () => ({
@@ -122,7 +124,7 @@ export default {
       };
       try {
         await this.$store.dispatch("updateCategory", formData);
-        this.$message("Категория успешно обновлена");
+        this.$message(localizeFilter("UpdateCategorySuccess"));
         this.$emit("updated", formData);
       } catch (err) {
         throw new Error(err);
